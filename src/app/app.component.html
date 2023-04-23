@@ -1,0 +1,41 @@
+<mat-toolbar color="primary">
+  <button
+    mat-icon-button
+    class="example-icon"
+    aria-label="Example icon-button with menu icon"
+    routerLink="/"
+  >
+    <mat-icon>supervised_user_circle</mat-icon>
+  </button>
+  <span>Assicurando</span>
+  <span class="example-spacer">
+    <ul class="nav navbar-nav">
+      <button mat-button style="margin-left: 1rem" routerLink="/">Home</button>
+      <button mat-button style="margin-left: 1rem" routerLink="/table">
+        Programma
+      </button>
+      <button mat-button style="margin-left: 1rem" routerLink="/stats">
+        Statistiche
+      </button>
+    </ul>
+  </span>
+  <button
+    *ngIf="router.url === '/home'"
+    mat-raised-button
+    style="margin-right: 1.4rem"
+  >
+    Entra
+  </button>
+  <button
+    *ngIf="router.url === '/table'"
+    (click)="openDialog()"
+    mat-raised-button
+    style="margin-right: 1.4rem"
+  >
+    <!-- (click)="openDialog()" -->
+    <mat-icon>add</mat-icon> Aggiungi
+  </button>
+</mat-toolbar>
+
+<!-- <app-table></app-table> -->
+<router-outlet></router-outlet>

@@ -1,0 +1,105 @@
+<h1 mat-dialog-title>Aggiungi elemento</h1>
+<div mat-dialog-content>
+  <form [formGroup]="personaForm">
+    <label for=""><h2>Persona</h2></label>
+    <mat-form-field appearance="fill">
+      <mat-label>Nome</mat-label>
+      <input formControlName="nome" matInput placeholder="Mario" />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Cognome</mat-label>
+      <input formControlName="cognome" matInput placeholder="Rossi" />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Codice Fiscale</mat-label>
+      <input
+        formControlName="codFiscale"
+        matInput
+        placeholder="NTSZNG87H02C672X"
+      />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Numero di telefono</mat-label>
+      <input formControlName="numTel" matInput placeholder="393000000" />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Indirizzo</mat-label>
+      <input
+        formControlName="indirizzo"
+        matInput
+        placeholder="Via Condotti, 32, Roma (RO)"
+      />
+    </mat-form-field>
+    <label for=""><h2>Veicolo</h2></label>
+
+    <!-- <mat-form-field appearance="fill">
+      <mat-label>Tipologia assicurazione</mat-label>
+      <mat-select formControlName="tipoAssicurazione" placeholder="Tipologia">
+        <mat-option value="">Autoveicolo</mat-option>
+        <mat-option value="">Motoveicolo</mat-option>
+        <mat-option value="">Ciclomotore</mat-option>
+        <mat-option value="">Altro</mat-option>
+      </mat-select>
+    </mat-form-field> -->
+
+    <mat-form-field appearance="fill">
+      <mat-label>Compagnia</mat-label>
+      <mat-select formControlName="compagnia" placeholder="Tipologia">
+        <mat-option value="Generali">Generali</mat-option>
+        <mat-option value="Allianz">Allianz</mat-option>
+        <mat-option value="Cattolica">Cattolica</mat-option>
+        <mat-option value="Groupama">Groupama</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Numero polizza</mat-label>
+      <input formControlName="numPolizza" matInput placeholder="00000000" />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Data decorrenza</mat-label>
+      <input
+        formControlName="dataDecorrenza"
+        matInput
+        [matDatepicker]="picker"
+      />
+      <mat-hint>GG/MM/AAAA</mat-hint>
+      <mat-datepicker-toggle
+        matIconSuffix
+        [for]="picker"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Targa</mat-label>
+      <input formControlName="targa" matInput placeholder="AB456CD" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Modello</mat-label>
+      <input formControlName="modello" matInput placeholder="BMW Serie 5" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Importo</mat-label>
+      <input formControlName="importo" matInput placeholder="€132,98" />
+    </mat-form-field>
+    
+    <!-- <mat-form-field appearance="fill">
+      <mat-label>Note</mat-label>
+      <textarea formControlName="note" matInput></textarea>
+    </mat-form-field> -->
+  </form>
+</div>
+<div mat-dialog-actions [align]="'end'">
+  <button mat-raised-button color="warn" mat-dialog-close>Chiudi</button>
+  <button
+    style="margin-left: 8px"
+    mat-raised-button
+    color="primary"
+    (click)="addPersona()"
+  >
+    {{ actionBtn }}
+  </button>
+</div>

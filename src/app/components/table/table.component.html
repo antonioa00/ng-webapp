@@ -1,0 +1,129 @@
+<div class="container">
+  <div style="margin-top: 10px">
+    <mat-form-field>
+      <mat-label>Filtro</mat-label>
+      <input
+        matInput
+        (keyup)="applyFilter($event)"
+        placeholder="Es. Luca"
+        #input
+      />
+      
+    </mat-form-field>
+
+    <div class="mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource" matSort>
+        <!-- nome -->
+        <ng-container matColumnDef="nome">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Nome</th>
+          <td mat-cell *matCellDef="let row">{{ row.nome | titlecase }}</td>
+        </ng-container>
+
+        <!-- cognome -->
+        <ng-container matColumnDef="cognome">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Cognome</th>
+          <td mat-cell *matCellDef="let row">{{ row.cognome | titlecase }}</td>
+        </ng-container>
+
+        <!-- codice fiscale -->
+        <ng-container matColumnDef="codFiscale">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            Codice Fiscale
+          </th>
+          <td mat-cell *matCellDef="let row">
+            {{ row.codFiscale | uppercase }}
+          </td>
+        </ng-container>
+
+        <!-- telefono -->
+        <ng-container matColumnDef="numTel">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Telefono</th>
+          <td mat-cell *matCellDef="let row">{{ row.numTel }}</td>
+        </ng-container>
+
+        <!-- indirizzo -->
+        <ng-container matColumnDef="indirizzo">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Indirizzo</th>
+          <td mat-cell *matCellDef="let row">
+            {{ row.indirizzo | titlecase }}
+          </td>
+        </ng-container>
+
+        <!-- compagnia assicurazione -->
+        <ng-container matColumnDef="compagnia">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Compagnia</th>
+          <td mat-cell *matCellDef="let row">
+            {{ row.compagnia | titlecase }}
+          </td>
+        </ng-container>
+
+        <!-- numero polizza -->
+        <ng-container matColumnDef="numPolizza">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Polizza</th>
+          <td mat-cell *matCellDef="let row">{{ row.numPolizza }}</td>
+        </ng-container>
+
+        <!-- data -->
+        <ng-container matColumnDef="dataDecorrenza">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Data</th>
+          <td mat-cell *matCellDef="let row">
+            {{ row.dataDecorrenza | date }}
+          </td>
+        </ng-container>
+
+        <!-- targa -->
+        <ng-container matColumnDef="targa">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Targa</th>
+          <td mat-cell *matCellDef="let row">
+            {{ row.targa | uppercase }}
+          </td>
+        </ng-container>
+
+        <!-- importo -->
+        <ng-container matColumnDef="importo">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Importo</th>
+          <td mat-cell *matCellDef="let row">
+            {{ row.importo | currency : "EUR" }}
+          </td>
+          <!-- {{Value | currency}} -->
+        </ng-container>
+
+        <!-- azioni -->
+        <ng-container matColumnDef="azioni">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+          <td mat-cell *matCellDef="let row">
+            <button mat-icon-button (click)="editPersona(row)">
+              <mat-icon mat-icon-button color="primary">edit</mat-icon>
+            </button>
+            <button mat-icon-button (click)="deletePersona(row.id)">
+              <mat-icon mat-icon-button color="warn">delete</mat-icon>
+            </button>
+            <button mat-icon-button color="mat-grey">
+              <mat-icon>more_horiz</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+        <!-- Row shown when there is no matching data. -->
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="4">
+            Nessun dato trovato per il filtro selezionato
+          </td>
+        </tr>
+      </table>
+
+      <mat-paginator
+        [pageSizeOptions]="[5, 10, 25, 100]"
+        [pageSize]="10"
+        aria-label="Seleziona utenti da mostrare"
+      >
+      </mat-paginator>
+    </div>
+  </div>
+</div>
+
+<!-- spinner -->
+<mat-spinner id="spinner" *ngIf="spinnerStatus"></mat-spinner>
