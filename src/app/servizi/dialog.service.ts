@@ -1,9 +1,14 @@
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class DialogService {
-
-  constructor() { }
+  dataPeople!: any;
+  rowID: any;
+  clientMoreInfo: any;
+  constructor() {}
+  updateTable = new Subject();
+  updateCustomers = new Subject();
 }

@@ -3,21 +3,23 @@ import {
   ViewChild,
   OnInit,
   AfterViewInit,
-  Inject,
-  Input,
+  Output,
+  EventEmitter,
 } from '@angular/core';
 import {
   MatDialog,
   MAT_DIALOG_DATA,
   MatDialogRef,
 } from '@angular/material/dialog';
-
 import { DialogComponent } from '../dialog/dialog.component';
+import { DialogInfoComponent } from '../dialog-info/dialog-info.component';
 import { ApiService } from 'src/app/servizi/api.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Router } from '@angular/router';
+import { DialogService } from 'src/app/servizi/dialog.service';
+import { filter } from 'rxjs';
+import { SocketIoService } from 'src/app/servizi/socket.io.service';
 
 @Component({
   selector: 'app-table',
@@ -27,13 +29,13 @@ import { Router } from '@angular/router';
 export class TableComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = [
     'nome',
-    'cognome',
+    // 'cognome',
     'codFiscale',
     'numTel',
     'indirizzo',
     'compagnia',
     'numPolizza',
-    'dataDecorrenza',
+    'dataEmissione',
     'targa',
     // 'modello',
     'importo',
@@ -42,31 +44,35 @@ export class TableComponent implements OnInit, AfterViewInit {
   dataSource!: any;
   spinnerStatus: boolean = true;
   isOnTable!: boolean;
+  camillo = 'bbbb';
   // roba cambiata
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+  // @Output() sendFunctionData = new EventEmitter<any>();
 
-  constructor(private dialog: MatDialog, private api: ApiService) {}
-  openDialog() {
-    this.dialog
-      .open(DialogComponent, {
-        width: '30%',
-      })
-      .afterClosed()
-      .subscribe((val) => {
-        if (val === 'save') {
-          this.getAllPersone();
-        }
-      });
-  }
+  constructor(
+    private dialog: MatDialog,
+    private api: ApiService,
+    private dialogService: DialogService,
+    private socket: SocketIoService
+  ) {}
 
   ngOnInit(): void {
     this.getAllPersone();
+    this.updateTable();
+    this.realtimeUpdate();
+    this.socket.camillo.subscribe((data) => {
+      this.getAllPersone();
+    });
   }
 
   ngAfterViewInit(): void {
     this.paginator._intl.itemsPerPageLabel = 'Elementi per pagina:';
     this.isOnTable = false;
+  }
+
+  realtimeUpdate() {
+    this.socket.receiveServer();
   }
 
   getAllPersone() {
@@ -76,12 +82,14 @@ export class TableComponent implements OnInit, AfterViewInit {
         // this.dataSource.data = Object.keys(res).map((key) => {
         //   return res[key];
         // });
-        console.log(this.dataSource);
+        this.camillo = JSON.stringify(this.dataSource._data._value);
         // this.dataSource = Object.data.value.keys(res);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
         if (res) {
           this.spinnerStatus = false;
+          // this.dialogService.updateTable.next(res);
+          this.dialogService.dataPeople = res;
         }
       },
       error: () => console.log('Errore durante il caricamento delle persone'),
@@ -90,10 +98,15 @@ export class TableComponent implements OnInit, AfterViewInit {
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
+    filterValue;
     this.dataSource.filter = filterValue.trim().toLowerCase();
 
     if (this.dataSource.paginator) {
+      console.log('PAGINATOR');
+      console.log(this.dataSource.paginator);
+
       this.dataSource.paginator.firstPage();
+      console.log(this.dataSource.paginator.firstPage);
     }
   }
 
@@ -121,5 +134,44 @@ export class TableComponent implements OnInit, AfterViewInit {
           this.getAllPersone();
         }
       });
+  }
+
+  addPersona() {
+    this.dialog
+      .open(DialogComponent, {
+        width: '30%',
+      })
+      .afterClosed()
+      .subscribe(() => {
+        {
+          this.getAllPersone();
+        }
+      });
+  }
+
+  updateTable() {
+    this.dialogService.updateTable.subscribe({
+      next: () => {
+        this.getAllPersone();
+      },
+    });
+  }
+
+  openInfo(id: number) {
+    this.dialogService.rowID = id;
+    this.api.getPersonaByID(id).subscribe({
+      // ricordati che secondo parametro era this.editData.id
+      next: (res) => {
+        this.dialogService.updateCustomers.next(res);
+        this.dialogService.clientMoreInfo = res;
+        // alert('Utente ottenuto con successo');
+      },
+      error: () => {
+        alert('Errore durante la modifica!');
+      },
+    });
+    this.dialog.open(DialogInfoComponent, {
+      width: '30%',
+    });
   }
 }

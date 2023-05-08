@@ -1,3 +1,15 @@
+<!-- <div class="div-controls">
+  <button
+    mat-fab
+    color="primary"
+    (click)="addPersona()"
+    aria-label="Example icon button with a delete icon"
+  >
+    <mat-icon>add</mat-icon>
+  </button>
+</div> -->
+<div>
+</div>
 <div class="container">
   <div style="margin-top: 10px">
     <mat-form-field>
@@ -8,7 +20,6 @@
         placeholder="Es. Luca"
         #input
       />
-      
     </mat-form-field>
 
     <div class="mat-elevation-z8">
@@ -20,10 +31,10 @@
         </ng-container>
 
         <!-- cognome -->
-        <ng-container matColumnDef="cognome">
+        <!-- <ng-container matColumnDef="cognome">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Cognome</th>
           <td mat-cell *matCellDef="let row">{{ row.cognome | titlecase }}</td>
-        </ng-container>
+        </ng-container> -->
 
         <!-- codice fiscale -->
         <ng-container matColumnDef="codFiscale">
@@ -64,10 +75,10 @@
         </ng-container>
 
         <!-- data -->
-        <ng-container matColumnDef="dataDecorrenza">
+        <ng-container matColumnDef="dataEmissione">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Data</th>
           <td mat-cell *matCellDef="let row">
-            {{ row.dataDecorrenza | date }}
+            {{ row.dataEmissione | date : "d/M/yyyy" }}
           </td>
         </ng-container>
 
@@ -95,10 +106,14 @@
             <button mat-icon-button (click)="editPersona(row)">
               <mat-icon mat-icon-button color="primary">edit</mat-icon>
             </button>
-            <button mat-icon-button (click)="deletePersona(row.id)">
+            <button mat-icon-button (click)="deletePersona(row._id)">
               <mat-icon mat-icon-button color="warn">delete</mat-icon>
             </button>
-            <button mat-icon-button color="mat-grey">
+            <button
+              mat-icon-button
+              color="mat-grey"
+              (click)="openInfo(row._id)"
+            >
               <mat-icon>more_horiz</mat-icon>
             </button>
           </td>

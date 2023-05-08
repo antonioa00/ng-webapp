@@ -1,16 +1,18 @@
-<mat-toolbar color="primary">
+<mat-toolbar *ngIf="api.isLoggedIn$ | async" color="primary">
   <button
     mat-icon-button
     class="example-icon"
     aria-label="Example icon-button with menu icon"
-    routerLink="/"
+    routerLink="/home"
   >
     <mat-icon>supervised_user_circle</mat-icon>
   </button>
   <span>Assicurando</span>
   <span class="example-spacer">
     <ul class="nav navbar-nav">
-      <button mat-button style="margin-left: 1rem" routerLink="/">Home</button>
+      <button mat-button style="margin-left: 1rem" routerLink="/home">
+        Home
+      </button>
       <button mat-button style="margin-left: 1rem" routerLink="/table">
         Programma
       </button>
@@ -19,13 +21,13 @@
       </button>
     </ul>
   </span>
-  <button
+  <!-- <button
     *ngIf="router.url === '/home'"
     mat-raised-button
     style="margin-right: 1.4rem"
   >
     Entra
-  </button>
+  </button> -->
   <button
     *ngIf="router.url === '/table'"
     (click)="openDialog()"

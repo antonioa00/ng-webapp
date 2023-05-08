@@ -1,15 +1,15 @@
 <h1 mat-dialog-title>Aggiungi elemento</h1>
 <div mat-dialog-content>
   <form [formGroup]="personaForm">
-    <label for=""><h2>Persona</h2></label>
+    <label for="persona"><h2>Persona</h2></label>
     <mat-form-field appearance="fill">
       <mat-label>Nome</mat-label>
-      <input formControlName="nome" matInput placeholder="Mario" />
+      <input formControlName="nome" matInput placeholder="Mario Rossi" />
     </mat-form-field>
-    <mat-form-field appearance="fill">
+    <!-- <mat-form-field appearance="fill">
       <mat-label>Cognome</mat-label>
       <input formControlName="cognome" matInput placeholder="Rossi" />
-    </mat-form-field>
+    </mat-form-field> -->
     <mat-form-field appearance="fill">
       <mat-label>Codice Fiscale</mat-label>
       <input
@@ -18,10 +18,21 @@
         placeholder="NTSZNG87H02C672X"
       />
     </mat-form-field>
+
     <mat-form-field appearance="fill">
       <mat-label>Numero di telefono</mat-label>
       <input formControlName="numTel" matInput placeholder="393000000" />
     </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Email</mat-label>
+      <input
+        formControlName="numTel"
+        matInput
+        placeholder="mariorossi@gmail.com"
+      />
+    </mat-form-field>
+
     <mat-form-field appearance="fill">
       <mat-label>Indirizzo</mat-label>
       <input
@@ -30,7 +41,17 @@
         placeholder="Via Condotti, 32, Roma (RO)"
       />
     </mat-form-field>
-    <label for=""><h2>Veicolo</h2></label>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Classe</mat-label>
+      <input formControlName="classe" matInput placeholder="1" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Classe precedente</mat-label>
+      <input formControlName="classePre" matInput placeholder="2" />
+    </mat-form-field>
+    <label for="veicolo"><h2>Veicolo</h2></label>
 
     <!-- <mat-form-field appearance="fill">
       <mat-label>Tipologia assicurazione</mat-label>
@@ -56,20 +77,53 @@
       <mat-label>Numero polizza</mat-label>
       <input formControlName="numPolizza" matInput placeholder="00000000" />
     </mat-form-field>
+
     <mat-form-field appearance="fill">
-      <mat-label>Data decorrenza</mat-label>
+      <mat-label>Numero polizza sostituta</mat-label>
+      <input formControlName="numSostituta" matInput placeholder="00000000" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Numero polizza abbinata</mat-label>
+      <input formControlName="numAbbinata" matInput placeholder="00000000" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Emissione</mat-label>
       <input
-        formControlName="dataDecorrenza"
+        formControlName="dataEmissione"
         matInput
         [matDatepicker]="picker"
       />
-      <mat-hint>GG/MM/AAAA</mat-hint>
+      <!-- <mat-hint>GG/MM/AAAA</mat-hint> -->
       <mat-datepicker-toggle
         matIconSuffix
         [for]="picker"
       ></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Scadenza</mat-label>
+      <input
+        formControlName="dataScadenza"
+        matInput
+        [matDatepicker]="picker1"
+      />
+      <!-- <mat-hint>GG/MM/AAAA</mat-hint> -->
+      <mat-datepicker-toggle
+        matIconSuffix
+        [for]="picker1"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #picker1></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Importo</mat-label>
+      <input formControlName="importo" matInput placeholder="€132,98" />
+    </mat-form-field>
+
+    <label for="polizza"><h2>Veicolo</h2></label>
 
     <mat-form-field appearance="fill">
       <mat-label>Targa</mat-label>
@@ -82,10 +136,20 @@
     </mat-form-field>
 
     <mat-form-field appearance="fill">
-      <mat-label>Importo</mat-label>
-      <input formControlName="importo" matInput placeholder="€132,98" />
+      <mat-label>Cilindrata</mat-label>
+      <input formControlName="numCilindrata" matInput placeholder="2000" />
     </mat-form-field>
-    
+
+    <mat-form-field appearance="fill">
+      <mat-label>Cavalli</mat-label>
+      <input formControlName="numCavalli" matInput placeholder="11" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Quintali</mat-label>
+      <input formControlName="numQuintali" matInput placeholder="41" />
+    </mat-form-field>
+
     <!-- <mat-form-field appearance="fill">
       <mat-label>Note</mat-label>
       <textarea formControlName="note" matInput></textarea>
