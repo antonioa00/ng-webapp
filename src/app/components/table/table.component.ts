@@ -61,7 +61,7 @@ export class TableComponent implements OnInit, AfterViewInit {
     this.getAllPersone();
     this.updateTable();
     this.realtimeUpdate();
-    this.socket.camillo.subscribe((data) => {
+    this.socket.socketSub.subscribe((data) => {
       this.getAllPersone();
     });
   }

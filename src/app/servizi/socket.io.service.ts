@@ -7,24 +7,22 @@ import { Observable, Subject } from 'rxjs';
 })
 export class SocketIoService {
   socket: Socket;
-  camillo = new Subject();
+  socketSub = new Subject();
   constructor() {}
-  connect() {
-    this.socket = io('http://localhost:3000/');
-    this.socket.on('hello', (status) => {
-      console.log(status);
-    });
-  }
 
   passServer(data: any) {
-    this.socket = io('http://localhost:3000/');
+    this.socket = io('http://weak-red-alligator-hat.cyclic.app', {
+      transports: ['websocket'],
+    });
     this.socket.emit('custom-event', data);
   }
 
   receiveServer() {
-    this.socket = io('http://localhost:3000/');
+    this.socket = io('http://weak-red-alligator-hat.cyclic.app', {
+      transports: ['websocket'],
+    });
     this.socket.on('receive-message', (data) => {
-      this.camillo.next(data);
+      this.socketSub.next(data);
     });
   }
 }
