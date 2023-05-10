@@ -8,8 +8,7 @@
     <mat-icon>add</mat-icon>
   </button>
 </div> -->
-<div>
-</div>
+<div></div>
 <div class="container">
   <div style="margin-top: 10px">
     <mat-form-field>
@@ -17,7 +16,7 @@
       <input
         matInput
         (keyup)="applyFilter($event)"
-        placeholder="Es. Luca"
+        placeholder="Es. Luca Rossi"
         #input
       />
     </mat-form-field>
@@ -106,7 +105,7 @@
             <button mat-icon-button (click)="editPersona(row)">
               <mat-icon mat-icon-button color="primary">edit</mat-icon>
             </button>
-            <button mat-icon-button (click)="deletePersona(row._id)">
+            <button mat-icon-button (click)="deletePersona$(row._id)">
               <mat-icon mat-icon-button color="warn">delete</mat-icon>
             </button>
             <button

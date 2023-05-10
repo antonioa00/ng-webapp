@@ -30,14 +30,22 @@
   </button> -->
   <button
     *ngIf="router.url === '/table'"
+    mat-button
+    style="margin-right: 1.4rem"
+  >
+    Esporta
+  </button>
+  <button
+    *ngIf="router.url === '/table'"
     (click)="openDialog()"
     mat-raised-button
     style="margin-right: 1.4rem"
   >
-    <!-- (click)="openDialog()" -->
     <mat-icon>add</mat-icon> Aggiungi
   </button>
 </mat-toolbar>
 
 <!-- <app-table></app-table> -->
 <router-outlet></router-outlet>
+
+<app-footer *ngIf="router.url === '/home'"></app-footer>

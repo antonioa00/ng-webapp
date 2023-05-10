@@ -6,10 +6,7 @@
       <mat-label>Nome</mat-label>
       <input formControlName="nome" matInput placeholder="Mario Rossi" />
     </mat-form-field>
-    <!-- <mat-form-field appearance="fill">
-      <mat-label>Cognome</mat-label>
-      <input formControlName="cognome" matInput placeholder="Rossi" />
-    </mat-form-field> -->
+
     <mat-form-field appearance="fill">
       <mat-label>Codice Fiscale</mat-label>
       <input
@@ -21,13 +18,13 @@
 
     <mat-form-field appearance="fill">
       <mat-label>Numero di telefono</mat-label>
-      <input formControlName="numTel" matInput placeholder="393000000" />
+      <input formControlName="numTel" matInput placeholder="3932189127" />
     </mat-form-field>
 
     <mat-form-field appearance="fill">
       <mat-label>Email</mat-label>
       <input
-        formControlName="numTel"
+        formControlName="email"
         matInput
         placeholder="mariorossi@gmail.com"
       />
@@ -51,7 +48,8 @@
       <mat-label>Classe precedente</mat-label>
       <input formControlName="classePre" matInput placeholder="2" />
     </mat-form-field>
-    <label for="veicolo"><h2>Veicolo</h2></label>
+
+    <label for="polizza"><h2>Polizza</h2></label>
 
     <!-- <mat-form-field appearance="fill">
       <mat-label>Tipologia assicurazione</mat-label>
@@ -110,7 +108,7 @@
         matInput
         [matDatepicker]="picker1"
       />
-      <!-- <mat-hint>GG/MM/AAAA</mat-hint> -->
+
       <mat-datepicker-toggle
         matIconSuffix
         [for]="picker1"
@@ -123,7 +121,7 @@
       <input formControlName="importo" matInput placeholder="€132,98" />
     </mat-form-field>
 
-    <label for="polizza"><h2>Veicolo</h2></label>
+    <label for="veicolo"><h2>Veicolo</h2></label>
 
     <mat-form-field appearance="fill">
       <mat-label>Targa</mat-label>
@@ -150,10 +148,12 @@
       <input formControlName="numQuintali" matInput placeholder="41" />
     </mat-form-field>
 
-    <!-- <mat-form-field appearance="fill">
+    <label for="altro"><h2>Altro</h2></label>
+
+    <mat-form-field appearance="fill">
       <mat-label>Note</mat-label>
       <textarea formControlName="note" matInput></textarea>
-    </mat-form-field> -->
+    </mat-form-field>
   </form>
 </div>
 <div mat-dialog-actions [align]="'end'">

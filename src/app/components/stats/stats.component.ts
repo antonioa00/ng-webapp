@@ -15,7 +15,7 @@ export class StatsComponent implements OnInit, OnDestroy {
   subPersone: any;
 
   ngOnInit(): void {
-    this.subPersone = this.apiService.getPersona().subscribe({
+    this.subPersone = this.apiService.getPersona$().subscribe({
       next: (res: any) => {
         this.sumPolizze = res.reduce(
           (acc: number, object: { importo: number }) => {

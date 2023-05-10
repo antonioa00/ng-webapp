@@ -5,6 +5,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ApiService } from 'src/app/servizi/api.service';
 import { DialogService } from 'src/app/servizi/dialog.service';
 import { SocketIoService } from 'src/app/servizi/socket.io.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-dialog',
@@ -20,7 +21,8 @@ export class DialogComponent {
     @Inject(MAT_DIALOG_DATA) public editData: any,
     private dialogRef: MatDialogRef<DialogComponent>,
     private dialogService: DialogService,
-    private socket: SocketIoService
+    private socket: SocketIoService,
+    private toastr: ToastrService
   ) {}
   ngOnInit(): void {
     this.formValidation();
@@ -32,13 +34,13 @@ export class DialogComponent {
   addPersona() {
     if (!this.editData) {
       if (this.personaForm.valid) {
-        this.api.postPersona(this.personaForm.value).subscribe({
+        this.api.postPersona$(this.personaForm.value).subscribe({
           next: (res) => {
-            alert('Persona aggiunta con successo!');
             this.personaForm.reset();
             this.dialogRef.close('save');
             this.dialogService.updateTable.next('aggiorna');
-            this.socket.passServer(res);
+            this.socket.sendServer('added Persona');
+            this.toastr.success('Persona aggiunta!');
           },
           error: () => {
             alert('Errore!');
@@ -51,12 +53,13 @@ export class DialogComponent {
   }
 
   updatePersona() {
-    this.api.putPersona(this.personaForm.value, this.editData._id).subscribe({
+    this.api.putPersona$(this.personaForm.value, this.editData._id).subscribe({
       // ricordati che secondo parametro era this.editData.id
       next: () => {
-        alert('Modificato con successo!');
         this.personaForm.reset();
         this.dialogRef.close('update');
+        this.socket.sendServer('updated Persona');
+        this.toastr.info('Persona modificata!');
       },
       error: () => {
         alert('Errore durante la modifica!');
@@ -82,7 +85,6 @@ export class DialogComponent {
       classe: [''],
       classePre: [''],
       compagnia: [''],
-      // tipoAssicurazione: [Validators.required],
       numPolizza: ['', Validators.pattern('^[0-9]*$')],
       numSostituta: [''],
       numAbbinata: [''],
@@ -105,9 +107,8 @@ export class DialogComponent {
   }
 
   formModify() {
-    // persona
+    // ---- PERSONA ----
     this.personaForm.controls['nome'].setValue(this.editData.nome);
-    // this.personaForm.controls['cognome'].setValue(this.editData.cognome);
     this.personaForm.controls['codFiscale'].setValue(this.editData.codFiscale);
     this.personaForm.controls['numTel'].setValue(this.editData.numTel);
     this.personaForm.controls['email'].setValue(this.editData.email);
@@ -115,28 +116,21 @@ export class DialogComponent {
     this.personaForm.controls['classe'].setValue(this.editData.classe);
     this.personaForm.controls['classePre'].setValue(this.editData.classePre);
 
-    // polizza
-    this.personaForm.controls['numPolizza'].setValue(this.editData.numPolizza);
-    this.personaForm.controls['numSostituta'].setValue(
-      this.editData.numSostituta
-    );
-    this.personaForm.controls['dataEmissione'].setValue(
-      this.editData.dataEmissione
-    );
-    this.personaForm.controls['dataScadenza'].setValue(
-      this.editData.dataScadenza
-    );
-
-    this.personaForm.controls['importo'].setValue(this.editData.importo);
-    // veicolo
-    this.personaForm.controls['modello'].setValue(this.editData.modello);
-    this.personaForm.controls['cilindrata'].setValue(this.editData.cilindrata);
-    this.personaForm.controls['cavalli'].setValue(this.editData.cavalli);
-    this.personaForm.controls['quintali'].setValue(this.editData.quintali);
-
-    this.personaForm.controls['targa'].setValue(this.editData.targa);
+    // ---- POLIZZA ----
     this.personaForm.controls['compagnia'].setValue(this.editData.compagnia);
-
+    this.personaForm.controls['numPolizza'].setValue(this.editData.numPolizza);
+    this.personaForm.controls['numSostituta'].setValue(this.editData.numSostituta);
+    this.personaForm.controls['numAbbinata'].setValue(this.editData.numAbbinata);
+    this.personaForm.controls['dataEmissione'].setValue(this.editData.dataEmissione);
+    this.personaForm.controls['dataScadenza'].setValue(this.editData.dataScadenza);
+    this.personaForm.controls['importo'].setValue(this.editData.importo);
+    // ---- VEICOLO ----
+    this.personaForm.controls['targa'].setValue(this.editData.targa);
+    this.personaForm.controls['modello'].setValue(this.editData.modello);
+    this.personaForm.controls['numCilindrata'].setValue(this.editData.numCilindrata);
+    this.personaForm.controls['numCavalli'].setValue(this.editData.numCavalli);
+    this.personaForm.controls['numQuintali'].setValue(this.editData.numQuintali);
+    // ---- ALTRO ----
     this.personaForm.controls['note'].setValue(this.editData.note);
 
     this.actionBtn = 'Modifica';

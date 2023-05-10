@@ -10,20 +10,18 @@
       <mat-label>Abbinata</mat-label>
       <input readonly value="{{ infoCustomer.numAbbinata }}" matInput />
     </mat-form-field>
-    <mat-form-field appearance="fill">
-      <mat-label>Codice Fiscale</mat-label>
-      <input matInput readonly />
-    </mat-form-field>
 
     <label for=""><h2>Veicolo</h2></label>
     <mat-form-field appearance="fill">
       <mat-label>Cilindrata</mat-label>
       <input matInput readonly />
+
     </mat-form-field>
     <mat-form-field appearance="fill">
       <mat-label>Cavalli</mat-label>
       <input matInput readonly />
     </mat-form-field>
+
     <mat-form-field appearance="fill">
       <mat-label>Quintali</mat-label>
       <input matInput readonly />
@@ -34,7 +32,7 @@
       <mat-label>Creato</mat-label>
       <input
         readonly
-        value="{{ infoCustomer.createdAt | date : 'd/M/yyyy' }}"
+        value="{{ infoCustomer.createdAt | date : 'd/M/yyyy, hh:mm' }}"
         matInput
       />
     </mat-form-field>
@@ -43,7 +41,7 @@
       <mat-label>Modificato</mat-label>
       <input
         readonly
-        value="{{ infoCustomer.updatedAt | date : 'd/M/yyyy' }}"
+        value="{{ infoCustomer.updatedAt | date : 'd/M/yyyy, hh:mm' }}"
         matInput
       />
     </mat-form-field>

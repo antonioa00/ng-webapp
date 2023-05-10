@@ -18,8 +18,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { DialogService } from 'src/app/servizi/dialog.service';
-import { filter } from 'rxjs';
 import { SocketIoService } from 'src/app/servizi/socket.io.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-table',
@@ -29,7 +29,6 @@ import { SocketIoService } from 'src/app/servizi/socket.io.service';
 export class TableComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = [
     'nome',
-    // 'cognome',
     'codFiscale',
     'numTel',
     'indirizzo',
@@ -37,7 +36,6 @@ export class TableComponent implements OnInit, AfterViewInit {
     'numPolizza',
     'dataEmissione',
     'targa',
-    // 'modello',
     'importo',
     'azioni',
   ];
@@ -54,14 +52,15 @@ export class TableComponent implements OnInit, AfterViewInit {
     private dialog: MatDialog,
     private api: ApiService,
     private dialogService: DialogService,
-    private socket: SocketIoService
+    private socket: SocketIoService,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
     this.getAllPersone();
     this.updateTable();
     this.realtimeUpdate();
-    this.socket.socketSub.subscribe((data) => {
+    this.socket.socketSub.subscribe(() => {
       this.getAllPersone();
     });
   }
@@ -76,7 +75,7 @@ export class TableComponent implements OnInit, AfterViewInit {
   }
 
   getAllPersone() {
-    this.api.getPersona().subscribe({
+    this.api.getPersona$().subscribe({
       next: (res: any) => {
         this.dataSource = new MatTableDataSource(res);
         // this.dataSource.data = Object.keys(res).map((key) => {
@@ -110,11 +109,13 @@ export class TableComponent implements OnInit, AfterViewInit {
     }
   }
 
-  deletePersona(id: number) {
-    this.api.deletePersona(id).subscribe({
+  deletePersona$(id: number) {
+    this.api.deletePersona$(id).subscribe({
       next: (res) => {
-        alert('Eliminato con successo!');
+        // alert('Eliminato con successo!');
+        this.socket.sendServer('deleted Persona');
         this.getAllPersone();
+        this.toastr.error('Persona eliminata!');
       },
       error: () => {
         alert('Errore durante la rimozione!');
@@ -159,7 +160,7 @@ export class TableComponent implements OnInit, AfterViewInit {
 
   openInfo(id: number) {
     this.dialogService.rowID = id;
-    this.api.getPersonaByID(id).subscribe({
+    this.api.getPersonaByID$(id).subscribe({
       // ricordati che secondo parametro era this.editData.id
       next: (res) => {
         this.dialogService.updateCustomers.next(res);

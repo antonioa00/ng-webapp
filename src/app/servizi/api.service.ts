@@ -21,52 +21,34 @@ export class ApiService {
   }
 
   // per aggiungere
-  // https://weak-red-alligator-hat.cyclic.app/users/
-  postPersona(dato: any) {
-    return this.http.post<any>(
-      'https://weak-red-alligator-hat.cyclic.app/users',
-      dato
-    );
+  // https://ass-server-render.onrender.com/users/
+  postPersona$(dato: any) {
+    return this.http.post<any>('http://localhost:3000/users/', dato);
   }
   // http://localhost:3000/users/
   // per leggere
-  getPersona() {
-    return this.http.get<any>('https://weak-red-alligator-hat.cyclic.app/users');
+  getPersona$() {
+    return this.http.get<any>('http://localhost:3000/users/');
   }
 
   // per modificare
-  putPersona(data: any, id: any) {
-    return this.http.patch<any>(
-      'https://weak-red-alligator-hat.cyclic.app/users/' + id,
-      data
-    );
+  putPersona$(data: any, id: any) {
+    return this.http.patch<any>('http://localhost:3000/users/' + id, data);
   }
 
   // read by id
-  getPersonaByID(id: any) {
-    return this.http.get<any>(
-      'https://weak-red-alligator-hat.cyclic.app/users/' + id
-    );
+  getPersonaByID$(id: any) {
+    return this.http.get<any>('http://localhost:3000/users/' + id);
   }
 
   // per eliminare
-  deletePersona(id: any) {
-    return this.http.delete<any>(
-      'https://weak-red-alligator-hat.cyclic.app/users/' + id
-    );
+  deletePersona$(id: any) {
+    return this.http.delete<any>('http://localhost:3000/users/' + id);
   }
 
-  // api citazioni
-  getQuotes() {
-    return this.http.get<any>('https://type.fit/api/quotes');
-  }
-
-  postLogin(LoginSettings: LoginSettings) {
+  postLogin$(LoginSettings: LoginSettings) {
     return this.http
-      .post(
-        'https://weak-red-alligator-hat.cyclic.app/auth/login',
-        LoginSettings
-      )
+      .post('http://localhost:3000/auth/login', LoginSettings)
       .pipe(
         tap((response: any) => {
           this._isLoggedIn$.next(true);

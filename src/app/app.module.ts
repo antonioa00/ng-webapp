@@ -33,6 +33,8 @@ import { ObserversModule } from '@angular/cdk/observers';
 import { DialogInfoComponent } from './components/dialog-info/dialog-info.component';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { IsAuthGuard } from './guards/is-auth.guard';
+import { ToastrModule } from 'ngx-toastr';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +45,7 @@ import { IsAuthGuard } from './guards/is-auth.guard';
     StatsComponent,
     LoginComponent,
     DialogInfoComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,
@@ -78,6 +81,10 @@ import { IsAuthGuard } from './guards/is-auth.guard';
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
+    ToastrModule.forRoot({
+      positionClass: 'toast-bottom-right',
+      timeOut: 1000,
+    }),
   ],
   providers: [{ provide: MAT_DATE_LOCALE, useValue: 'it-IT' }],
   bootstrap: [AppComponent],

@@ -1,17 +1,18 @@
-<!-- inizio alert -->
-<div role="alert" *ngIf="wrongAdmin">
-  <div class="bg-red-500 text-white font-bold rounded-t px-4 py-2">Errore</div>
-  <div
-    class="border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700"
-  >
-    <p>Nome utente o password non corretti.</p>
-  </div>
-</div>
-<!-- fine alert -->
 <section class="bg-gray-50 dark:bg-gray-900">
   <div
     class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0"
   >
+    <!-- inizio alert -->
+    <div
+      *ngIf="wrongAdmin"
+      class="bg-red-100 border mb-5 border-red-400 text-red-700 px-4 py-3 rounded relative"
+      role="alert"
+    >
+      <strong class="font-bold">Errore! </strong>
+      <span class="block sm:inline">Utente o password non corretti!</span>
+      <span class="absolute top-0 bottom-0 right-0 px-4 py-3"> </span>
+    </div>
+    <!-- fine alert -->
     <div
       class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700"
     >
