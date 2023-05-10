@@ -23,7 +23,7 @@ export class ApiService {
   // per aggiungere
   // https://ass-server-render.onrender.com/users/
   postPersona$(dato: any) {
-    return this.http.post<any>('hhttps://ass-server-render.onrender.com/users/', dato);
+    return this.http.post<any>('https://ass-server-render.onrender.com/users/', dato);
   }
   // http://localhost:3000/users/
   // per leggere
