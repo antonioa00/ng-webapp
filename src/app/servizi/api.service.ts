@@ -23,32 +23,32 @@ export class ApiService {
   // per aggiungere
   // https://ass-server-render.onrender.com/users/
   postPersona$(dato: any) {
-    return this.http.post<any>('http://localhost:3000/users/', dato);
+    return this.http.post<any>('hhttps://ass-server-render.onrender.com/users/', dato);
   }
   // http://localhost:3000/users/
   // per leggere
   getPersona$() {
-    return this.http.get<any>('http://localhost:3000/users/');
+    return this.http.get<any>('https://ass-server-render.onrender.com/users/');
   }
 
   // per modificare
   putPersona$(data: any, id: any) {
-    return this.http.patch<any>('http://localhost:3000/users/' + id, data);
+    return this.http.patch<any>('https://ass-server-render.onrender.com/users/' + id, data);
   }
 
   // read by id
   getPersonaByID$(id: any) {
-    return this.http.get<any>('http://localhost:3000/users/' + id);
+    return this.http.get<any>('https://ass-server-render.onrender.com/users/' + id);
   }
 
   // per eliminare
   deletePersona$(id: any) {
-    return this.http.delete<any>('http://localhost:3000/users/' + id);
+    return this.http.delete<any>('https://ass-server-render.onrender.com/users/' + id);
   }
 
   postLogin$(LoginSettings: LoginSettings) {
     return this.http
-      .post('http://localhost:3000/auth/login', LoginSettings)
+      .post('https://ass-server-render.onrender.com/auth/login', LoginSettings)
       .pipe(
         tap((response: any) => {
           this._isLoggedIn$.next(true);

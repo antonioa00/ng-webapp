@@ -12,13 +12,13 @@ export class SocketIoService {
 
   // manda al server
   sendServer(data: any) {
-    this.socket = io('http://localhost:3000/');
+    this.socket = io('https://ass-server-render.onrender.com/');
     this.socket.emit('custom-event', data);
   }
 
   // riceve dal server
   receiveServer() {
-    this.socket = io('http://localhost:3000/');
+    this.socket = io('https://ass-server-render.onrender.com/');
     this.socket.on('receive-message', (data) => {
       this.socketSub.next(data);
     });
