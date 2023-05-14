@@ -87,18 +87,30 @@
     </mat-form-field>
 
     <mat-form-field appearance="fill">
+      <mat-label>Frazionamento</mat-label>
+      <mat-select formControlName="frazionamento">
+        <mat-option value="annuale">Annuale</mat-option>
+        <mat-option value="semestrale">Semestrale</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
       <mat-label>Emissione</mat-label>
       <input
         formControlName="dataEmissione"
         matInput
-        [matDatepicker]="picker"
+        [matDatepicker]="pickerdataEmissione"
       />
-      <!-- <mat-hint>GG/MM/AAAA</mat-hint> -->
       <mat-datepicker-toggle
         matIconSuffix
-        [for]="picker"
+        [for]="pickerdataEmissione"
       ></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
+      <mat-datepicker #pickerdataEmissione></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Pervenuta</mat-label>
+      <input formControlName="pervenuta" matInput placeholder="18.20" />
     </mat-form-field>
 
     <mat-form-field appearance="fill">
@@ -106,19 +118,55 @@
       <input
         formControlName="dataScadenza"
         matInput
-        [matDatepicker]="picker1"
+        [matDatepicker]="pickerdataScadenza"
       />
-
       <mat-datepicker-toggle
         matIconSuffix
-        [for]="picker1"
+        [for]="pickerdataScadenza"
       ></mat-datepicker-toggle>
-      <mat-datepicker #picker1></mat-datepicker>
+      <mat-datepicker #pickerdataScadenza></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Scadenza 2</mat-label>
+      <input
+        formControlName="dataScadenza2"
+        matInput
+        [matDatepicker]="pickerdataScadenza2"
+      />
+      <mat-datepicker-toggle
+        matIconSuffix
+        [for]="pickerdataScadenza2"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #pickerdataScadenza2></mat-datepicker>
     </mat-form-field>
 
     <mat-form-field appearance="fill">
       <mat-label>Importo</mat-label>
       <input formControlName="importo" matInput placeholder="€132,98" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Tipo Pagamento</mat-label>
+      <mat-select formControlName="tipoPagamento" placeholder="Contanti">
+        <mat-option value="Contanti">Contanti</mat-option>
+        <mat-option value="Pos">Pos</mat-option>
+        <mat-option value="Bonifico">Bonifico</mat-option>
+        <mat-option value="Assegno">Assegno</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Data pagamento</mat-label>
+      <input
+        formControlName="dataPagamento"
+        matInput
+        [matDatepicker]="pickerdataPagamento"
+      />
+      <mat-datepicker-toggle
+        matIconSuffix
+        [for]="pickerdataPagamento"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #pickerdataPagamento></mat-datepicker>
     </mat-form-field>
 
     <label for="veicolo"><h2>Veicolo</h2></label>
@@ -146,6 +194,11 @@
     <mat-form-field appearance="fill">
       <mat-label>Quintali</mat-label>
       <input formControlName="numQuintali" matInput placeholder="41" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Kilowatt</mat-label>
+      <input formControlName="numKw" matInput placeholder="23" />
     </mat-form-field>
 
     <label for="altro"><h2>Altro</h2></label>

@@ -1,0 +1,18 @@
+ul {
+  list-style-type: none;
+  margin-top: 4px;
+}
+
+.matContainer {
+  // display: flex;
+  // flex: 10px;
+  // flex-direction: column;
+  // flex-wrap: wrap;
+  // justify-content: flex-start;
+  // align-items: stretch;
+  // align-content: stretch;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: auto;
+  gap: 5px;
+}

@@ -43,6 +43,13 @@
   >
     <mat-icon>add</mat-icon> Aggiungi
   </button>
+  <button
+    *ngIf="router.url === '/table'"
+    (click)="openSettings()"
+    style="margin-right: 1.4rem; margin-top: 0.5rem"
+  >
+    <mat-icon>settings</mat-icon>
+  </button>
 </mat-toolbar>
 
 <!-- <app-table></app-table> -->

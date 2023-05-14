@@ -69,6 +69,7 @@ export class DialogComponent {
 
   formValidation() {
     this.personaForm = this.formBuilder.group({
+      // PERSONA
       nome: ['', [Validators.required]],
       // Validators.pattern('^[a-zA-Z]+$ ')
       codFiscale: [
@@ -84,13 +85,19 @@ export class DialogComponent {
       indirizzo: [''],
       classe: [''],
       classePre: [''],
+      // POLIZZA
       compagnia: [''],
       numPolizza: ['', Validators.pattern('^[0-9]*$')],
       numSostituta: [''],
       numAbbinata: [''],
+      frazionamento: [''],
       dataEmissione: [''],
       dataScadenza: [''],
+      dataScadenza2: [''],
       importo: ['', Validators.pattern('^[0-9]*$')],
+      tipoPagamento: [''],
+      dataPagamento: [''],
+      // VEICOLO
       targa: [
         '',
         [
@@ -102,6 +109,7 @@ export class DialogComponent {
       numCilindrata: [''],
       numCavalli: [''],
       numQuintali: [''],
+      numKw: [''],
       note: [''],
     });
   }
@@ -119,17 +127,46 @@ export class DialogComponent {
     // ---- POLIZZA ----
     this.personaForm.controls['compagnia'].setValue(this.editData.compagnia);
     this.personaForm.controls['numPolizza'].setValue(this.editData.numPolizza);
-    this.personaForm.controls['numSostituta'].setValue(this.editData.numSostituta);
-    this.personaForm.controls['numAbbinata'].setValue(this.editData.numAbbinata);
-    this.personaForm.controls['dataEmissione'].setValue(this.editData.dataEmissione);
-    this.personaForm.controls['dataScadenza'].setValue(this.editData.dataScadenza);
+    this.personaForm.controls['numSostituta'].setValue(
+      this.editData.numSostituta
+    );
+    this.personaForm.controls['numAbbinata'].setValue(
+      this.editData.numAbbinata
+    );
+    this.personaForm.controls['frazionamento'].setValue(
+      this.editData.frazionamento
+    );
+    this.personaForm.controls['dataEmissione'].setValue(
+      this.editData.dataEmissione
+    );
+    this.personaForm.controls['dataScadenza'].setValue(
+      this.editData.dataScadenza
+    );
+    this.personaForm.controls['dataScadenza2'].setValue(
+      this.editData.dataScadenza2
+    );
     this.personaForm.controls['importo'].setValue(this.editData.importo);
+    this.personaForm.controls['tipoPagamento'].setValue(
+      this.editData.tipoPagamento
+    );
+    this.personaForm.controls['dataPagamento'].setValue(
+      this.editData.dataPagamento
+    );
+
     // ---- VEICOLO ----
     this.personaForm.controls['targa'].setValue(this.editData.targa);
     this.personaForm.controls['modello'].setValue(this.editData.modello);
-    this.personaForm.controls['numCilindrata'].setValue(this.editData.numCilindrata);
+    this.personaForm.controls['numCilindrata'].setValue(
+      this.editData.numCilindrata
+    );
     this.personaForm.controls['numCavalli'].setValue(this.editData.numCavalli);
-    this.personaForm.controls['numQuintali'].setValue(this.editData.numQuintali);
+    this.personaForm.controls['numQuintali'].setValue(
+      this.editData.numQuintali
+    );
+    this.personaForm.controls['numKw'].setValue(this.editData.numKw);
+    console.log(this.personaForm.controls);
+    console.log(this.editData);
+
     // ---- ALTRO ----
     this.personaForm.controls['note'].setValue(this.editData.note);
 

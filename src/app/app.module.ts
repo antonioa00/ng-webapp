@@ -35,6 +35,9 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { IsAuthGuard } from './guards/is-auth.guard';
 import { ToastrModule } from 'ngx-toastr';
 import { FooterComponent } from './components/footer/footer.component';
+import { DialogSettingsComponent } from './components/dialog-settings/dialog-settings.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { DialogUploadComponent } from './components/dialog-upload/dialog-upload.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +49,8 @@ import { FooterComponent } from './components/footer/footer.component';
     LoginComponent,
     DialogInfoComponent,
     FooterComponent,
+    DialogSettingsComponent,
+    DialogUploadComponent,
   ],
   imports: [
     BrowserModule,
@@ -85,6 +90,7 @@ import { FooterComponent } from './components/footer/footer.component';
       positionClass: 'toast-bottom-right',
       timeOut: 1000,
     }),
+    MatCheckboxModule,
   ],
   providers: [{ provide: MAT_DATE_LOCALE, useValue: 'it-IT' }],
   bootstrap: [AppComponent],

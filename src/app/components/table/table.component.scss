@@ -17,7 +17,8 @@ table {
 // }
 
 .container {
-  max-width: 1600px;
+  // durante il testing --> 1600px;
+  max-width: 1800px;
   margin: 0 auto;
 }
 
@@ -45,4 +46,8 @@ table {
 
 button {
   display: inline-block;
+}
+
+.icons-alignment {
+  text-align: right;
 }

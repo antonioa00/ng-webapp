@@ -20,6 +20,9 @@ import { MatTableDataSource } from '@angular/material/table';
 import { DialogService } from 'src/app/servizi/dialog.service';
 import { SocketIoService } from 'src/app/servizi/socket.io.service';
 import { ToastrService } from 'ngx-toastr';
+import { ColumnsdynamicService } from 'src/app/servizi/columnsdynamic.service';
+import { EMPTY } from 'rxjs';
+import { DialogUploadComponent } from '../dialog-upload/dialog-upload.component';
 
 @Component({
   selector: 'app-table',
@@ -27,22 +30,12 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./table.component.scss'],
 })
 export class TableComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = [
-    'nome',
-    'codFiscale',
-    'numTel',
-    'indirizzo',
-    'compagnia',
-    'numPolizza',
-    'dataEmissione',
-    'targa',
-    'importo',
-    'azioni',
-  ];
+  displayedColumns: any = [];
   dataSource!: any;
   spinnerStatus: boolean = true;
   isOnTable!: boolean;
   camillo = 'bbbb';
+  sendedColumns: any;
   // roba cambiata
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -53,15 +46,32 @@ export class TableComponent implements OnInit, AfterViewInit {
     private api: ApiService,
     private dialogService: DialogService,
     private socket: SocketIoService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private colDynamic: ColumnsdynamicService
   ) {}
 
   ngOnInit(): void {
     this.getAllPersone();
     this.updateTable();
     this.realtimeUpdate();
+    // prettier-ignore
+    this.displayedColumns = JSON.parse(localStorage.getItem('storedColumns') || '[]');
     this.socket.socketSub.subscribe(() => {
       this.getAllPersone();
+    });
+
+    this.colDynamic.serviceColumns.asObservable().subscribe((data: any) => {
+      if (data.length === 1 && data.includes('azioni')) {
+        alert(
+          'Errore! Non puoi aggiungere solo le azioni senza altre colonne.'
+        );
+      }
+      if (data.length == 0) alert('Errore! Selezionare almeno un elemento');
+      else {
+        this.displayedColumns = data;
+        this.colDynamic.savedColumns = data;
+        localStorage.setItem('storedColumns', JSON.stringify(data));
+      }
     });
   }
 
@@ -150,6 +160,14 @@ export class TableComponent implements OnInit, AfterViewInit {
       });
   }
 
+  openFiles(id: Number) {
+    this.dialog
+      .open(DialogUploadComponent, {
+        width: '50%',
+      })
+      .afterClosed();
+  }
+
   updateTable() {
     this.dialogService.updateTable.subscribe({
       next: () => {
@@ -159,6 +177,7 @@ export class TableComponent implements OnInit, AfterViewInit {
   }
 
   openInfo(id: number) {
+    console.log(this.colDynamic.serviceColumns);
     this.dialogService.rowID = id;
     this.api.getPersonaByID$(id).subscribe({
       // ricordati che secondo parametro era this.editData.id

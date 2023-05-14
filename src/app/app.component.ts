@@ -1,7 +1,7 @@
 import { OnInit, Component, ViewChildren } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from './components/dialog/dialog.component';
-import { TableComponent } from './components/table/table.component';
+import { DialogSettingsComponent } from './components/dialog-settings/dialog-settings.component';
 import { Router, RouterLink } from '@angular/router';
 import { ApiService } from './servizi/api.service';
 @Component({
@@ -32,5 +32,11 @@ export class AppComponent implements OnInit {
         {
         }
       });
+  }
+
+  openSettings() {
+    let dialogRef = this.dialog.open(DialogSettingsComponent, {
+      width: '30%',
+    });
   }
 }

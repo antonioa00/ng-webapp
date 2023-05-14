@@ -8,7 +8,6 @@
     <mat-icon>add</mat-icon>
   </button>
 </div> -->
-<div></div>
 <div class="container">
   <div style="margin-top: 10px">
     <mat-form-field>
@@ -23,17 +22,12 @@
 
     <div class="mat-elevation-z8">
       <table mat-table [dataSource]="dataSource" matSort>
+        <!-- PERSONA -->
         <!-- nome -->
         <ng-container matColumnDef="nome">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Nome</th>
           <td mat-cell *matCellDef="let row">{{ row.nome | titlecase }}</td>
         </ng-container>
-
-        <!-- cognome -->
-        <!-- <ng-container matColumnDef="cognome">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Cognome</th>
-          <td mat-cell *matCellDef="let row">{{ row.cognome | titlecase }}</td>
-        </ng-container> -->
 
         <!-- codice fiscale -->
         <ng-container matColumnDef="codFiscale">
@@ -59,7 +53,25 @@
           </td>
         </ng-container>
 
-        <!-- compagnia assicurazione -->
+        <!-- classe -->
+        <ng-container matColumnDef="classe">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Classe</th>
+          <td mat-cell *matCellDef="let row">
+            {{ row.classe }}
+          </td>
+        </ng-container>
+
+        <!-- classe precedente -->
+        <ng-container matColumnDef="classePre">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Classe Pre.</th>
+          <td mat-cell *matCellDef="let row">
+            {{ row.classePre }}
+          </td>
+        </ng-container>
+
+        <!-- POLIZZA -->
+
+        <!-- compagnia -->
         <ng-container matColumnDef="compagnia">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Compagnia</th>
           <td mat-cell *matCellDef="let row">
@@ -73,19 +85,61 @@
           <td mat-cell *matCellDef="let row">{{ row.numPolizza }}</td>
         </ng-container>
 
-        <!-- data -->
+        <!-- numero polizza sostituta -->
+        <ng-container matColumnDef="numSostituta">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Sostituta</th>
+          <td mat-cell *matCellDef="let row">{{ row.numSostituta }}</td>
+        </ng-container>
+
+        <!-- numero polizza abbinata -->
+        <ng-container matColumnDef="numAbbinata">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Abbinata</th>
+          <td mat-cell *matCellDef="let row">{{ row.numAbbinata }}</td>
+        </ng-container>
+
+        <!-- data emissione -->
         <ng-container matColumnDef="dataEmissione">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Data</th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            Data Emissione
+          </th>
           <td mat-cell *matCellDef="let row">
             {{ row.dataEmissione | date : "d/M/yyyy" }}
           </td>
         </ng-container>
 
-        <!-- targa -->
-        <ng-container matColumnDef="targa">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Targa</th>
+        <!-- pervenuta -->
+        <ng-container matColumnDef="pervenuta">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Pervenuta</th>
+          <td mat-cell *matCellDef="let row">{{ row.pervenuta }}</td>
+        </ng-container>
+
+        <!-- classe precedente -->
+        <ng-container matColumnDef="frazionamento">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            Frazionamento
+          </th>
           <td mat-cell *matCellDef="let row">
-            {{ row.targa | uppercase }}
+            {{ row.frazionamento | titlecase }}
+          </td>
+        </ng-container>
+
+        <!-- data scadenza -->
+        <ng-container matColumnDef="dataScadenza">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            Data Scadenza
+          </th>
+          <td mat-cell *matCellDef="let row">
+            {{ row.dataScadenza | date : "d/M/yyyy" }}
+          </td>
+        </ng-container>
+
+        <!-- data scadenza -->
+        <ng-container matColumnDef="dataScadenza2">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            Data Scadenza 2
+          </th>
+          <td mat-cell *matCellDef="let row">
+            {{ row.dataScadenza2 | date : "d/M/yyyy" }}
           </td>
         </ng-container>
 
@@ -95,13 +149,76 @@
           <td mat-cell *matCellDef="let row">
             {{ row.importo | currency : "EUR" }}
           </td>
+
+          <!-- tipo pagamento -->
+          <ng-container matColumnDef="tipoPagamento">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              Tipo Pagamento
+            </th>
+            <td mat-cell *matCellDef="let row">
+              {{ row.tipoPagamento | titlecase }}
+            </td>
+          </ng-container>
+
+          <!-- VEICOLO -->
+
+          <!-- targa -->
+          <ng-container matColumnDef="targa">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Targa</th>
+            <td mat-cell *matCellDef="let row">
+              {{ row.targa | uppercase }}
+            </td>
+          </ng-container>
+
+          <!-- modello -->
+          <ng-container matColumnDef="modello">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Modello</th>
+            <td mat-cell *matCellDef="let row">
+              {{ row.modello | uppercase }}
+            </td>
+          </ng-container>
+
+          <!-- cilindrata -->
+          <ng-container matColumnDef="numCilindrata">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              Cilindrata
+            </th>
+            <td mat-cell *matCellDef="let row">
+              {{ row.numCilindrata }}
+            </td>
+          </ng-container>
+
+          <!-- cavalli -->
+          <ng-container matColumnDef="numCavalli">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Cavalli</th>
+            <td mat-cell *matCellDef="let row">
+              {{ row.numCavalli }}
+            </td>
+          </ng-container>
+
+          <!-- quintali -->
+          <ng-container matColumnDef="numQuintali">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Quintali</th>
+            <td mat-cell *matCellDef="let row">
+              {{ row.numQuintali }}
+            </td>
+          </ng-container>
+
+          <!-- kw -->
+          <ng-container matColumnDef="numKw">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Kilowatt</th>
+            <td mat-cell *matCellDef="let row">
+              {{ row.numKw }}
+            </td>
+          </ng-container>
+
           <!-- {{Value | currency}} -->
         </ng-container>
 
         <!-- azioni -->
         <ng-container matColumnDef="azioni">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
-          <td mat-cell *matCellDef="let row">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td class="icons-alignment" mat-cell *matCellDef="let row">
             <button mat-icon-button (click)="editPersona(row)">
               <mat-icon mat-icon-button color="primary">edit</mat-icon>
             </button>
@@ -115,9 +232,11 @@
             >
               <mat-icon>more_horiz</mat-icon>
             </button>
+            <button (click)="openFiles(row._id)" mat-icon-button color="white">
+              <mat-icon>folder_open</mat-icon>
+            </button>
           </td>
         </ng-container>
-
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 

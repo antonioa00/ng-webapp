@@ -10,15 +10,16 @@ export class SocketIoService {
   socketSub = new Subject();
   constructor() {}
 
+  // https://ass-server-render.onrender.com/
   // manda al server
   sendServer(data: any) {
-    this.socket = io('https://ass-server-render.onrender.com/');
+    this.socket = io('http://localhost:3000/');
     this.socket.emit('custom-event', data);
   }
 
   // riceve dal server
   receiveServer() {
-    this.socket = io('https://ass-server-render.onrender.com/');
+    this.socket = io('http://localhost:3000/');
     this.socket.on('receive-message', (data) => {
       this.socketSub.next(data);
     });
