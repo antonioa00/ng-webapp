@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ApiService } from '../servizi/api.service';
+import { ApiService } from '../services/api.service';
 import { LoginSettings } from '../data/login-settings';
 import { NgForm } from '@angular/forms';
 import { Route, Router } from '@angular/router';

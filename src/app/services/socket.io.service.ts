@@ -1,27 +1,28 @@
 import { Injectable } from '@angular/core';
-import { environment } from 'src/environments/environment.development';
 import { io, Socket } from 'socket.io-client';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
 export class SocketIoService {
   socket: Socket;
   socketSub = new Subject();
-  constructor() {}
 
+  //////////////////////////////////////////////////////////////////
+  // SOCKET.IO FRONT END IMPLENTATION
   // https://ass-server-render.onrender.com/
-  // manda al server
+  // DATA SENT TO SERVER
   sendServer(data: any) {
     this.socket = io('http://localhost:3000/');
     this.socket.emit('custom-event', data);
   }
 
-  // riceve dal server
+  // DATA RECEIVED FROM SERVER
   receiveServer() {
     this.socket = io('http://localhost:3000/');
     this.socket.on('receive-message', (data) => {
       this.socketSub.next(data);
     });
   }
+  //////////////////////////////////////////////////////////////////
 }

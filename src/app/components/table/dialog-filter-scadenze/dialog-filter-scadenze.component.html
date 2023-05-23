@@ -1,0 +1,42 @@
+<h2 mat-dialog-title>Filtro Scadenze</h2>
+
+<div mat-dialog-content align="center">
+  <mat-form-field>
+    <mat-label>Seleziona un intervallo</mat-label>
+    <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
+      <input
+        matStartDate
+        value="startValue"
+        formControlName="start"
+        placeholder="Data inizio"
+      />
+      <input
+        matEndDate
+        value="endValue"
+        formControlName="end"
+        placeholder="Data fine"
+      />
+    </mat-date-range-input>
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-date-range-picker #picker></mat-date-range-picker>
+
+    <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')"
+      >Data inizio invalida</mat-error
+    >
+    <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')"
+      >Data fine invalida</mat-error
+    >
+  </mat-form-field>
+
+  <div mat-dialog-actions style="margin-top: 10px" [align]="'end'">
+    <button
+      style="margin-left: 8px"
+      mat-dialog-close
+      mat-raised-button
+      color="primary"
+    >
+      Cerca
+    </button>
+    <button mat-raised-button color="warn" mat-dialog-close>Chiudi</button>
+  </div>
+</div>

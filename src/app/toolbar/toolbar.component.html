@@ -1,0 +1,63 @@
+<mat-toolbar *ngIf="api.isLoggedIn$ | async" color="primary">
+  <button
+    mat-icon-button
+    class="example-icon"
+    aria-label="Example icon-button with menu icon"
+    routerLink="/home"
+  >
+    <mat-icon>supervised_user_circle</mat-icon>
+  </button>
+  <span>Assicurando</span>
+  <span class="example-spacer">
+    <ul class="nav navbar-nav">
+      <button mat-button style="margin-left: 1rem" routerLink="/home">
+        Home
+      </button>
+      <button mat-button style="margin-left: 1rem" routerLink="/table">
+        Programma
+      </button>
+      <!-- routerLink="/stats" -->
+      <button
+        [matMenuTriggerFor]="menu"
+        mat-button
+        style="margin-left: 1rem"
+        
+      >
+        Utility
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item>Scadenze</button>
+        <button mat-menu-item>Statistiche</button>
+      </mat-menu>
+    </ul>
+  </span>
+  <!-- <button
+      *ngIf="router.url === '/home'"
+      mat-raised-button
+      style="margin-right: 1.4rem"
+    >
+      Entra
+    </button> -->
+  <button
+    *ngIf="router.url === '/table'"
+    mat-button
+    style="margin-right: 1.4rem"
+  >
+    Esporta
+  </button>
+  <button
+    *ngIf="router.url === '/table'"
+    (click)="openDialog()"
+    mat-raised-button
+    style="margin-right: 1.4rem"
+  >
+    <mat-icon>add</mat-icon> Aggiungi
+  </button>
+  <button
+    *ngIf="router.url === '/table'"
+    (click)="openSettings()"
+    style="margin-right: 1.4rem; margin-top: 0.5rem"
+  >
+    <mat-icon>settings</mat-icon>
+  </button>
+</mat-toolbar>

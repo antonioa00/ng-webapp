@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { ColumnsdynamicService } from 'src/app/servizi/columnsdynamic.service';
+import { CommonService } from 'src/app/services/common.service';
 
 @Component({
   selector: 'app-dialog-settings',
@@ -41,11 +41,10 @@ export class DialogSettingsComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private _formBuilder: FormBuilder,
     private _dialogRef: MatDialogRef<DialogSettingsComponent>,
-    private colDynamic: ColumnsdynamicService
+    private commonService: CommonService
   ) {}
 
   ngOnInit(): void {
-    console.log(this.dynamColumns);
     // prettier-ignore
     this.dynamColumns.patchValue(JSON.parse(localStorage.getItem('storedCheckboxes') ||'{}'));
   }
@@ -66,27 +65,10 @@ export class DialogSettingsComponent implements OnInit {
     ) {
       alert('Errore');
     } else {
-      this.colDynamic.serviceColumns.next(selectedColumns);
+      this.commonService.serviceColumns.next(selectedColumns);
       this._dialogRef.close();
       // prettier-ignore
       localStorage.setItem('storedCheckboxes',JSON.stringify(this.dynamColumns.value));
     }
-
-    console.log(selectedColumns);
-
-    // da rivedere
-    // let valueCheckbox = Object.entries(this.dynamColumns.value).reduce(
-    //   (acc: { key: string; value: boolean }[], [key, value]) => {
-    //     if (value) {
-    //       acc.push({ key, value });
-    //     }
-    //     return acc;
-    //   },
-    //   []
-    // );
-    // localStorage.setItem(
-    //   'storedCheckboxes',
-    //   JSON.stringify(this.dynamColumns.value)
-    // );
   }
 }

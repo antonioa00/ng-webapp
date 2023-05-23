@@ -4,19 +4,18 @@
     <label><h2>Polizza</h2></label>
     <mat-form-field appearance="fill">
       <mat-label>Sostituta</mat-label>
-      <input readonly value="{{ infoCustomer.numSostituta }}" matInput />
+      <input readonly [value]="infoCustomer.numPolizza" matInput />
     </mat-form-field>
 
     <mat-form-field appearance="fill">
       <mat-label>Abbinata</mat-label>
-      <input readonly value="{{ infoCustomer.numAbbinata }}" matInput />
+      <input readonly matInput />
     </mat-form-field>
 
     <label for=""><h2>Veicolo</h2></label>
     <mat-form-field appearance="fill">
       <mat-label>Cilindrata</mat-label>
       <input matInput readonly />
-
     </mat-form-field>
     <mat-form-field appearance="fill">
       <mat-label>Cavalli</mat-label>
@@ -30,11 +29,11 @@
 
     <mat-form-field appearance="fill">
       <mat-label>KW</mat-label>
-      <input readonly value="{{ infoCustomer.numKw }}" matInput />
+      <input readonly matInput />
     </mat-form-field>
 
     <label><h2>Altro</h2></label>
-    <mat-form-field appearance="fill">
+    <mat-form-field  appearance="fill">
       <mat-label>Creato</mat-label>
       <input
         readonly
@@ -43,7 +42,7 @@
       />
     </mat-form-field>
 
-    <mat-form-field appearance="fill">
+    <mat-form-field  appearance="fill">
       <mat-label>Modificato</mat-label>
       <input
         readonly

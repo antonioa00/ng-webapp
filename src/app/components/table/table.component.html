@@ -1,16 +1,34 @@
-<!-- <div class="div-controls">
-  <button
-    mat-fab
-    color="primary"
-    (click)="addPersona()"
-    aria-label="Example icon button with a delete icon"
-  >
-    <mat-icon>add</mat-icon>
-  </button>
-</div> -->
 <div class="container">
-  <div style="margin-top: 10px">
-    <mat-form-field>
+  <!-- buttons -->
+  <!-- pulisci filtri -->
+  <button
+    class="bg-[#ff4d4d] text-white active:bg-[#ff1a1a] font-bold uppercase text-xs px-4 py-2 rounded-full shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-3 mt-3 ease-linear transition-all duration-150"
+    type="button"
+    (click)="onReset()"
+  >
+    RESET
+  </button>
+  <!-- scadenze -->
+  <button
+    class="bg-slate-400 text-white active:bg-slate-500 font-bold uppercase text-xs px-4 py-2 rounded-full shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-3 mt-3 ease-linear transition-all duration-150"
+    type="button"
+    (click)="onScadenze()"
+  >
+    SCADENZE
+  </button>
+
+  <!-- insoluti -->
+  <button
+    class="bg-green-400 text-white active:bg-green-500 font-bold uppercase text-xs px-4 py-2 rounded-full shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-3 mt-3 ease-linear transition-all duration-150"
+    type="button"
+    (click)="onInsoluti()"
+  >
+    INSOLUTI
+  </button>
+
+  <!-- end buttons -->
+  <div style="margin-top: 5px">
+    <mat-form-field style="margin-bottom: -1em">
       <mat-label>Filtro</mat-label>
       <input
         matInput
@@ -19,8 +37,7 @@
         #input
       />
     </mat-form-field>
-
-    <div class="mat-elevation-z8">
+    <div class="mat-table-div mat-elevation-z8">
       <table mat-table [dataSource]="dataSource" matSort>
         <!-- PERSONA -->
         <!-- nome -->
@@ -160,6 +177,16 @@
             </td>
           </ng-container>
 
+          <!-- datas pagamento -->
+          <ng-container matColumnDef="dataPagamento">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              Data Pagamento
+            </th>
+            <td mat-cell *matCellDef="let row">
+              {{ row.dataPagamento | date : "d/M/yyyy" }}
+            </td>
+          </ng-container>
+
           <!-- VEICOLO -->
 
           <!-- targa -->
@@ -259,4 +286,4 @@
 </div>
 
 <!-- spinner -->
-<mat-spinner id="spinner" *ngIf="spinnerStatus"></mat-spinner>
+<mat-spinner id="spinner-table" *ngIf="spinnerStatus"></mat-spinner>

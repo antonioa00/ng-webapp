@@ -1,11 +1,10 @@
 import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatButton } from '@angular/material/button';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ApiService } from 'src/app/servizi/api.service';
-import { DialogService } from 'src/app/servizi/dialog.service';
-import { SocketIoService } from 'src/app/servizi/socket.io.service';
+import { ApiService } from 'src/app/services/api.service';
+import { SocketIoService } from 'src/app/services/socket.io.service';
 import { ToastrService } from 'ngx-toastr';
+import { CommonService } from 'src/app/services/common.service';
 
 @Component({
   selector: 'app-dialog',
@@ -13,14 +12,14 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./dialog.component.scss'],
 })
 export class DialogComponent {
-  actionBtn: string = 'Salva';
+  actionBtn = 'Salva';
   personaForm!: FormGroup;
   constructor(
     private formBuilder: FormBuilder,
     private api: ApiService,
     @Inject(MAT_DIALOG_DATA) public editData: any,
     private dialogRef: MatDialogRef<DialogComponent>,
-    private dialogService: DialogService,
+    private commonService: CommonService,
     private socket: SocketIoService,
     private toastr: ToastrService
   ) {}
@@ -38,7 +37,7 @@ export class DialogComponent {
           next: (res) => {
             this.personaForm.reset();
             this.dialogRef.close('save');
-            this.dialogService.updateTable.next('aggiorna');
+            this.commonService.updateTable.next(true);
             this.socket.sendServer('added Persona');
             this.toastr.success('Persona aggiunta!');
           },
@@ -92,6 +91,7 @@ export class DialogComponent {
       numAbbinata: [''],
       frazionamento: [''],
       dataEmissione: [''],
+      pervenuta: [''],
       dataScadenza: [''],
       dataScadenza2: [''],
       importo: ['', Validators.pattern('^[0-9]*$')],
@@ -139,6 +139,7 @@ export class DialogComponent {
     this.personaForm.controls['dataEmissione'].setValue(
       this.editData.dataEmissione
     );
+    this.personaForm.controls['pervenuta'].setValue(this.editData.pervenuta);
     this.personaForm.controls['dataScadenza'].setValue(
       this.editData.dataScadenza
     );

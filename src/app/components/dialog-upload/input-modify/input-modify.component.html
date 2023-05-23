@@ -1,0 +1,26 @@
+<div mat-dialog-content>
+  <h1 mat-dialog-title>Rinomina File</h1>
+  <mat-form-field style="margin-bottom: -1.25em" appearance="fill">
+    <mat-label>Nome</mat-label>
+    <input
+      [(ngModel)]="inputNameValue"
+      type="text"
+      matInput
+      required
+      (keydown.space)="$event.preventDefault()"
+      placeholder="{{ data.file.originalname }}"
+    />
+  </mat-form-field>
+
+  <div mat-dialog-actions [align]="'end'">
+    <button
+      [disabled]="inputNameValue == ''"
+      mat-raised-button
+      (click)="onSave()"
+      color="primary"
+    >
+      Salva
+    </button>
+    <button mat-raised-button color="warn" mat-dialog-close>Chiudi</button>
+  </div>
+</div>

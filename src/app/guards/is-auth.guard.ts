@@ -7,7 +7,7 @@ import {
   UrlTree,
 } from '@angular/router';
 import { Observable, tap } from 'rxjs';
-import { ApiService } from '../servizi/api.service';
+import { ApiService } from '../services/api.service';
 
 @Injectable({
   providedIn: 'root',
@@ -25,7 +25,7 @@ export class IsAuthGuard implements CanActivate {
     return this.api.isLoggedIn$.pipe(
       tap((isLoggedIn) => {
         if (!isLoggedIn) {
-          // redirect
+          // REDIRECT TO /LOGIN
           this.router.navigate(['/login']);
         }
       })

@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ApiService } from 'src/app/servizi/api.service';
+import { ApiService } from 'src/app/services/api.service';
 @Component({
   selector: 'app-stats',
   templateUrl: './stats.component.html',
@@ -8,8 +8,8 @@ import { ApiService } from 'src/app/servizi/api.service';
 export class StatsComponent implements OnInit, OnDestroy {
   constructor(public apiService: ApiService) {}
 
-  numberCustomers!: Number;
-  sumPolizze!: Number;
+  numberCustomers!: number;
+  sumPolizze!: number;
   customersLastMonth: any;
   currentDate: any = new Date(Date.now());
   subPersone: any;

@@ -1,66 +1,56 @@
-import {
-  Component,
-  ViewChild,
-  OnInit,
-  AfterViewInit,
-  Output,
-  EventEmitter,
-} from '@angular/core';
-import {
-  MatDialog,
-  MAT_DIALOG_DATA,
-  MatDialogRef,
-} from '@angular/material/dialog';
+import { Component, ViewChild, OnInit, AfterViewInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../dialog/dialog.component';
 import { DialogInfoComponent } from '../dialog-info/dialog-info.component';
-import { ApiService } from 'src/app/servizi/api.service';
+import { ApiService } from 'src/app/services/api.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { DialogService } from 'src/app/servizi/dialog.service';
-import { SocketIoService } from 'src/app/servizi/socket.io.service';
+import { SocketIoService } from 'src/app/services/socket.io.service';
 import { ToastrService } from 'ngx-toastr';
-import { ColumnsdynamicService } from 'src/app/servizi/columnsdynamic.service';
-import { EMPTY } from 'rxjs';
 import { DialogUploadComponent } from '../dialog-upload/dialog-upload.component';
-
+import { DialogFilterScadenzeComponent } from './dialog-filter-scadenze/dialog-filter-scadenze.component';
+import { CommonService } from 'src/app/services/common.service';
+import { User } from 'src/app/shared/models/user';
+import { HttpResponse } from '@angular/common/http';
+import { Observer } from 'rxjs';
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss'],
 })
 export class TableComponent implements OnInit, AfterViewInit {
-  displayedColumns: any = [];
-  dataSource!: any;
-  spinnerStatus: boolean = true;
-  isOnTable!: boolean;
-  camillo = 'bbbb';
+  filterInsoluti = false;
+  displayedColumns = [];
+  dataSource: any;
+  spinnerStatus = true;
+  isOnTable: boolean;
   sendedColumns: any;
-  // roba cambiata
-  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-  // @Output() sendFunctionData = new EventEmitter<any>();
 
   constructor(
     private dialog: MatDialog,
     private api: ApiService,
-    private dialogService: DialogService,
     private socket: SocketIoService,
     private toastr: ToastrService,
-    private colDynamic: ColumnsdynamicService
+    private commonService: CommonService
   ) {}
 
   ngOnInit(): void {
     this.getAllPersone();
     this.updateTable();
     this.realtimeUpdate();
-    // prettier-ignore
-    this.displayedColumns = JSON.parse(localStorage.getItem('storedColumns') || '[]');
+    this.displayedColumns = JSON.parse(
+      localStorage.getItem('storedColumns') || '[]'
+    );
+
     this.socket.socketSub.subscribe(() => {
       this.getAllPersone();
     });
 
-    this.colDynamic.serviceColumns.asObservable().subscribe((data: any) => {
+    this.commonService.serviceColumns.asObservable().subscribe((data: any) => {
       if (data.length === 1 && data.includes('azioni')) {
         alert(
           'Errore! Non puoi aggiungere solo le azioni senza altre colonne.'
@@ -69,7 +59,7 @@ export class TableComponent implements OnInit, AfterViewInit {
       if (data.length == 0) alert('Errore! Selezionare almeno un elemento');
       else {
         this.displayedColumns = data;
-        this.colDynamic.savedColumns = data;
+        this.commonService.savedColumns = data;
         localStorage.setItem('storedColumns', JSON.stringify(data));
       }
     });
@@ -86,19 +76,20 @@ export class TableComponent implements OnInit, AfterViewInit {
 
   getAllPersone() {
     this.api.getPersona$().subscribe({
-      next: (res: any) => {
+      next: (res: User[]) => {
+        // PROVVISORIO - DA RIVEDERE!
+        if (this.commonService.dataScadenza) {
+          res = this.commonService.filterDataSource(res);
+        }
+        if (this.filterInsoluti) {
+          res = res.filter((user: User) => !user.dataPagamento);
+        }
         this.dataSource = new MatTableDataSource(res);
-        // this.dataSource.data = Object.keys(res).map((key) => {
-        //   return res[key];
-        // });
-        this.camillo = JSON.stringify(this.dataSource._data._value);
-        // this.dataSource = Object.data.value.keys(res);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
         if (res) {
           this.spinnerStatus = false;
-          // this.dialogService.updateTable.next(res);
-          this.dialogService.dataPeople = res;
+          this.commonService.dataPeople = res;
         }
       },
       error: () => console.log('Errore durante il caricamento delle persone'),
@@ -121,8 +112,7 @@ export class TableComponent implements OnInit, AfterViewInit {
 
   deletePersona$(id: number) {
     this.api.deletePersona$(id).subscribe({
-      next: (res) => {
-        // alert('Eliminato con successo!');
+      next: () => {
         this.socket.sendServer('deleted Persona');
         this.getAllPersone();
         this.toastr.error('Persona eliminata!');
@@ -133,14 +123,14 @@ export class TableComponent implements OnInit, AfterViewInit {
     });
   }
 
-  editPersona(row: any) {
+  editPersona(row: User) {
     this.dialog
       .open(DialogComponent, {
         width: '30%',
         data: row,
       })
       .afterClosed()
-      .subscribe((val) => {
+      .subscribe((val: string) => {
         if (val === 'update') {
           this.getAllPersone();
         }
@@ -160,31 +150,27 @@ export class TableComponent implements OnInit, AfterViewInit {
       });
   }
 
-  openFiles(id: Number) {
-    this.dialog
-      .open(DialogUploadComponent, {
-        width: '50%',
-      })
-      .afterClosed();
-  }
-
   updateTable() {
-    this.dialogService.updateTable.subscribe({
+    this.commonService.updateTable.subscribe({
       next: () => {
         this.getAllPersone();
       },
     });
   }
 
+  openFiles(id: number) {
+    this.commonService.getData.next(id);
+    this.dialog.open(DialogUploadComponent, {
+      width: '50%',
+    });
+  }
+
   openInfo(id: number) {
-    console.log(this.colDynamic.serviceColumns);
-    this.dialogService.rowID = id;
+    this.commonService.rowID = id;
     this.api.getPersonaByID$(id).subscribe({
-      // ricordati che secondo parametro era this.editData.id
-      next: (res) => {
-        this.dialogService.updateCustomers.next(res);
-        this.dialogService.clientMoreInfo = res;
-        // alert('Utente ottenuto con successo');
+      next: (res: User) => {
+        this.commonService.updateCustomers.next(res);
+        this.commonService.clientMoreInfo = res;
       },
       error: () => {
         alert('Errore durante la modifica!');
@@ -194,4 +180,23 @@ export class TableComponent implements OnInit, AfterViewInit {
       width: '30%',
     });
   }
+
+  // --- BUTTONS ---
+  onReset() {
+    if (this.commonService.dataScadenza) this.commonService.dataScadenza = null;
+    if (this.filterInsoluti) this.filterInsoluti = false;
+    this.getAllPersone();
+  }
+
+  onInsoluti() {
+    this.filterInsoluti = true;
+    this.getAllPersone();
+  }
+
+  onScadenze() {
+    this.dialog.open(DialogFilterScadenzeComponent, {
+      width: '30%',
+    });
+  }
+
 }

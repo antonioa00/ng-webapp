@@ -3,40 +3,21 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from './components/dialog/dialog.component';
 import { DialogSettingsComponent } from './components/dialog-settings/dialog-settings.component';
 import { Router, RouterLink } from '@angular/router';
-import { ApiService } from './servizi/api.service';
+import { ApiService } from './services/api.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   title = 'Assicurando';
 
-  isOnTable: boolean = false;
-  status: boolean = true;
+  isOnTable = false;
+  status = true;
+  opened = false;
   constructor(
     private dialog: MatDialog,
     public router: Router,
     public api: ApiService
   ) {}
-
-  ngOnInit(): void {}
-
-  openDialog() {
-    this.dialog
-      .open(DialogComponent, {
-        width: '30%',
-      })
-      .afterClosed()
-      .subscribe(() => {
-        {
-        }
-      });
-  }
-
-  openSettings() {
-    let dialogRef = this.dialog.open(DialogSettingsComponent, {
-      width: '30%',
-    });
-  }
 }

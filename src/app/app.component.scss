@@ -1,31 +1,13 @@
-.example-spacer {
-  flex: 1 1 auto;
-}
-
-table {
+mat-sidenav-container {
+  height: 100vh;
   width: 100%;
 }
+// mat-sidenav,
+// mat-sidenav-content {
+//   padding: 16px;
+// }
 
-.mat-mdc-form-field {
-  font-size: 14px;
-  width: 100%;
+mat-sidenav {
+  background-color: lightcoral;
+  width: 200px;
 }
-
-// td,
-// th {
-//   width: 25%;
-// }
-
-.container {
-  max-width: 1600px;
-  margin: 0 auto;
-}
-
-
-// .mat-row:nth-child(even) {
-//   background-color: red;
-// }
-
-// .mat-row:nth-child(odd) {
-//   background-color: black;
-// }

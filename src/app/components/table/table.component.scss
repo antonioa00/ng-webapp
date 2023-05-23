@@ -6,15 +6,17 @@ table {
   width: 100%;
 }
 
+.mat-table-div {
+  border-radius: 8px !important;
+  overflow: hidden !important;
+  margin-bottom: 0.5rem;
+
+}
+
 .mat-mdc-form-field {
   font-size: 14px;
   width: 100%;
 }
-
-// td,
-// th {
-//   width: 25%;
-// }
 
 .container {
   // durante il testing --> 1600px;
@@ -22,9 +24,7 @@ table {
   margin: 0 auto;
 }
 
-// spinner
-
-#spinner {
+#spinner-table {
   position: absolute;
   height: 100px;
   width: 100px;
@@ -39,9 +39,6 @@ table {
   height: 3.5em;
   margin-right: 2.5em;
   margin-top: 0.4em;
-  // display: flex;
-  // justify-content: space-between;
-  // align-items: center;
 }
 
 button {

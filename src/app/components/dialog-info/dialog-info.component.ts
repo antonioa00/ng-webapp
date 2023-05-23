@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { DialogService } from 'src/app/servizi/dialog.service';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { CommonService } from 'src/app/services/common.service';
 
 @Component({
   selector: 'app-dialog-info',
@@ -7,16 +7,21 @@ import { DialogService } from 'src/app/servizi/dialog.service';
   styleUrls: ['./dialog-info.component.scss'],
 })
 export class DialogInfoComponent implements OnInit {
-  constructor(public dialogService: DialogService) {}
+  constructor(public commonService: CommonService) {}
   infoCustomer: any;
   ngOnInit() {
     this.getData();
-    // this.dataDialog = this.dialogService.dataPeople;
   }
 
   getData() {
-    this.dialogService.updateCustomers.asObservable().subscribe((res) => {
-      this.infoCustomer = res;
+    this.commonService.updateCustomers.asObservable().subscribe((res) => {
+      console.log('PRE INFO CUSTOMER', this.infoCustomer);
+      console.log(typeof res);
+      console.log('RES', res);
+      if (typeof res === 'object' && res != undefined) {
+        this.infoCustomer = res;
+      }
+      console.log('POST INFO CUSTOMER', this.infoCustomer);
     });
   }
 }

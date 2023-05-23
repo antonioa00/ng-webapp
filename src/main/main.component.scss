@@ -8,7 +8,6 @@
   height: 50vh;
   overflow: auto;
   flex-direction: row;
-  // background-color: yellow;
 }
 
 .FlexContainer div {
@@ -16,19 +15,6 @@
   height: 300px;
   margin: 50px;
   cursor: pointer;
-  // background-color: red;
-}
-
-.quote {
-  text-align: center;
-  margin-top: 10vh;
-}
-p {
-  font-size: 24px;
-  margin-bottom: 30px;
-  line-height: 0.8;
-  font-style: italic;
-  //   border: 20px solid black;
 }
 
 .border-styling {
